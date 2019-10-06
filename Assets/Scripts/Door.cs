@@ -99,14 +99,22 @@ public class Door : MonoBehaviour
     {
         collider.isTrigger = true;
         isDoorOpened = true;
-        anim.SetBool("IsOpen", true);
+        if (anim != null)
+        {
+            anim.SetBool("IsOpen", true);
+        }
+        
     }
 
     public void LockDoor()
     {
         collider.isTrigger = false;
         isDoorOpened = false;
-        anim.SetBool("IsOpen", false);
+        if (anim != null)
+        {
+            anim.SetBool("IsOpen", false);
+        }
+        
     }
 
 

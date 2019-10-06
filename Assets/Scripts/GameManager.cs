@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
         HideMessageBox();
         audioSource = GetComponent<AudioSource>();
 
+        ShowMessageBox("You drank too much in the last night. You wake up here in this dark cave.\r\n How did i get here ?", 10.0f);
+
     }
 
     public void HideMessageBox()
@@ -72,6 +74,16 @@ public class GameManager : MonoBehaviour
         Invoke("RestartGame", 3);
     }
 
+    public void GameFinished()
+    {
+        Invoke("FinishGame", 10);
+    }
+
+    public void FinishGame()
+    {
+        SceneManager.LoadScene("GameFinished");
+    }
+
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -84,27 +96,27 @@ public class GameManager : MonoBehaviour
         switch (collectableType)
         {
             case Collectable.COLLECT_TYPE.CANDLE:
-                ShowMessageBox("YOU GOT THE <color=red>CANDLE</color>.\r\nALL LIGHTS ARE ON.", 4f);
+                ShowMessageBox("YOU GOT THE <color=red>CANDLE</color>.\r\nALL LIGHTS ARE ON.", 5f);
                 candleItem.sprite = candleSpriteActive;
                 break;
 
             case Collectable.COLLECT_TYPE.JUMPBOOTS:
-                ShowMessageBox("YOU GOT THE <color=brown>Jump Boots</color>.\r\nYOU CAN NOW JUMP.", 4f);
+                ShowMessageBox("YOU GOT THE <color=brown>Jump Boots</color>.\r\nYOU CAN NOW JUMP WITH SPACEBAR.", 5f);
                 bootsItem.sprite = bootsSpriteActive;
                 break;
 
             case Collectable.COLLECT_TYPE.ARROW:
-                ShowMessageBox("YOU GOT THE <color=yellow>BOW</color>.\r\nYOU CAN NOW SHOOT ARROWS.", 4f);
+                ShowMessageBox("YOU GOT THE <color=yellow>BOW</color>.\r\nYOU CAN NOW SHOOT ARROWS WITH X.", 5f);
                 arrowItem.sprite = arrowSpriteActive;
                 break;
 
             case Collectable.COLLECT_TYPE.SWIM:
-                ShowMessageBox("YOU GOT THE <color=blue>FLIPPERS</color>.\r\nYOU CAN NOW SWIM IN WATER.", 4f);
+                ShowMessageBox("YOU GOT THE <color=blue>FLIPPERS</color>.\r\nYOU CAN NOW SWIM IN WATER.", 5f);
                 swimItem.sprite = swimSpriteActive;
                 break;
 
             case Collectable.COLLECT_TYPE.DASH:
-                ShowMessageBox("YOU GOT THE <color=pink>DASH</color>.\r\nYOU CAN NOW DASH TO DESTROY BLOCKS.", 4f);
+                ShowMessageBox("YOU GOT THE <color=pink>DASH</color>.\r\nYOU CAN NOW DASH WITH C.", 5f);
                 dashItem.sprite = dashSpriteActive;
                 break;
         }

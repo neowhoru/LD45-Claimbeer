@@ -10,6 +10,7 @@ public class EnemyAI : MonoBehaviour
     public float attakRadius;
     public Transform homePosition;
     public float moveSpeed;
+    private bool isCollide = false;
 
     public ParticleSystem deathParticle;
     void Start()
@@ -19,19 +20,6 @@ public class EnemyAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        CheckDistance();
-    }
-
-    void CheckDistance()
-    {
-        if (Vector3.Distance(target.position, transform.position) <= chaseRadius && Vector3.Distance(target.position, transform.position) > attakRadius)
-        {
-            Vector3 followPosition = new Vector3(target.position.x, homePosition.position.y, target.position.z);
-            transform.position = Vector3.MoveTowards(transform.position, followPosition, moveSpeed * Time.deltaTime);
-        }
-    }
 
     public void KillEnemy()
     {
@@ -40,5 +28,13 @@ public class EnemyAI : MonoBehaviour
         gameObject.GetComponent<Collider2D>().enabled = false;
         gameObject.tag = "Untagged";
         Destroy(gameObject, 1);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isCollide = true;
+        }
     }
 }

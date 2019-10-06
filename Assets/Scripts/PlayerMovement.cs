@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private bool isJumping = false;
+    private bool isDashing = false;
     public bool canMove = true;
     public bool canJump = false;
     public bool canShoot = false;
@@ -78,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
             scale.x = 1;
             transform.localScale = scale;
             anim.SetBool("IsWalking", true);
+            anim.SetBool("IsShooting", false);
             isFacingRight = true;
         }
         else if (x < 0 && canMove)
@@ -88,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
             scale.x = -1;
             transform.localScale = scale;
             anim.SetBool("IsWalking", true);
+            anim.SetBool("IsShooting", false);
             isFacingRight = false;
         }
         else
@@ -114,6 +117,31 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine("ShootTheArrow");
         }
 
+        if (Input.GetKeyDown(KeyCode.C) && canDash)
+        {
+            Camera.main.transform.DOComplete();
+            Camera.main.transform.DOShakePosition(.2f, .2f, 8, 90, false, true);
+            if (isFacingRight)
+            {
+                myBody.AddForce(Vector3.right * 22, ForceMode2D.Impulse);
+                anim.SetBool("IsDashing", true);
+            }
+            else
+            {
+                myBody.AddForce(Vector3.left * 22, ForceMode2D.Impulse);
+                anim.SetBool("IsDashing", true);
+            }
+            Invoke("UnsetDash", 0.5f);
+            isDashing = true;
+            
+        }
+
+    }
+
+    public void UnsetDash()
+    {
+        isDashing = false;
+        anim.SetBool("IsDashing", false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -125,6 +153,35 @@ public class PlayerMovement : MonoBehaviour
             gameManager.GameOver();
         }
 
+        if (collision.tag.Equals("Ending"))
+        {
+            canMove = false;
+            canJump = false;
+            canShoot = false;
+            gameManager.GameFinished();
+        }
+
+        if(collision.tag.Equals("Water"))
+        {
+            if (!canSwim)
+            {
+                PlayerDeath();
+                gameManager.GameOver();
+            }
+            else
+            {
+                anim.SetBool("IsSwim", true);
+            }
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water"))
+        {
+            anim.SetBool("IsSwim", false);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -140,6 +197,13 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("IsJump", false);
 
         }
+
+        /*
+        if(collision.collider.CompareTag("Brick") && isDashing)
+        {
+            Destroy(collision.collider);
+        }
+        */
 
     }
 
@@ -163,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator ShootTheArrow()
     {
         Camera.main.transform.DOComplete();
-        Camera.main.transform.DOShakePosition(.05f, 0.25f, 2, 5, false, false);
+        Camera.main.transform.DOShakePosition(.2f, .2f, 8, 90, false, true);
 
         canShoot = false;
         GameObject arrow = Instantiate(arrowPrefab, shootPosition.position, Quaternion.identity);

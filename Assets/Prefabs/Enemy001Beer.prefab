@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4719238363847660591}
   - component: {fileID: 4719238363847660590}
   - component: {fileID: 7322115307328877444}
+  - component: {fileID: 6171401657883096490}
+  - component: {fileID: 9034321351917533298}
   m_Layer: 0
   m_Name: Enemy001Beer
   m_TagString: Death
@@ -224,6 +226,48 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!61 &6171401657883096490
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4719238363847660589}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.10059357, y: -0.36531734}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.5, y: 2}
+    newSize: {x: 1.5, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.17638397, y: 1.2693653}
+  m_EdgeRadius: 0
+--- !u!114 &9034321351917533298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4719238363847660589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344347f3498ba834abfd0598ceeba6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.2
+  distance: 0.5
+  isChangingDirectionOnCollide: 0
+  moveLeft: 0
 --- !u!1001 &8662250052766993656
 PrefabInstance:
   m_ObjectHideFlags: 0
